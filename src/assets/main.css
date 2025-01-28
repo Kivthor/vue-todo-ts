@@ -1,0 +1,53 @@
+:root {
+  --border-main-container: none;
+  --border-container: none;
+  --border-sub-container: none;
+  --border-button: none;
+  --main-radius: 1.5rem;
+
+  --hue: 210;
+  --hue-mod: calc(var(--hue) + 45);
+  --sat: 40%;
+
+  --main-color: hsl(var(--hue), var(--sat), 50%);
+  --main-color-lighter: hsl(var(--hue), var(--sat), 60%);
+  --main-color-very-light: hsl(var(--hue), var(--sat), 80%);
+  --main-color-darker: hsl(var(--hue), var(--sat), 40%);
+  --main-color-text: hsl(var(--hue), var(--sat), 90%);
+  --main-shadow: 0.1rem 0.1rem 0.5rem var(--main-color-lighter);
+
+  --main-color-mod: hsl(var(--hue-mod), var(--sat), 50%);
+  --main-color-lighter-mod: hsl(var(--hue-mod), var(--sat), 60%);
+  --main-color-very-light-mod: hsl(var(--hue-mod), var(--sat), 80%);
+  --main-color-darker-mod: hsl(var(--hue-mod), var(--sat), 40%);
+  --main-color-text-mod: hsl(var(--hue-mod), var(--sat), 90%);
+  --main-shadow-mod: 0.1rem 0.1rem 0.5rem var(--main-color-lighter-mod);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: normal;
+  word-spacing: normal;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--main-color-text);
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+::placeholder {
+  color: var(--main-color-text);
+  opacity: 0.5;
+  font-family: "Courier New", Courier, monospace;
+}
+

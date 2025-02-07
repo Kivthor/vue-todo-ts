@@ -4,7 +4,7 @@ import { computed } from 'vue'
 const emit = defineEmits(['action'])
 const props = defineProps({
   buttonType: String,
-  func: Function,
+  // func: Function,
 })
 const isItDeleteButton = computed(() => props.buttonType === 'DELETE')
 const isItTopButton = computed(() => props.buttonType === 'TOPBUTTON')

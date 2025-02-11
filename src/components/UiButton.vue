@@ -37,7 +37,7 @@ const onClick = () => {
   border: var(--border-button);
   background-color: var(--main-color-lighter);
   color: var(--main-color-text);
-  transition: 0.3s;
+  transition: 0.1s;
   &:hover {
     background-color: var(--main-color-darker);
     border-color: var(--main-color-darker);

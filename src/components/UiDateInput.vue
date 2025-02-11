@@ -27,7 +27,7 @@ const onInput = (event: Event) => {
   color-scheme: dark;
   border: var(--border-button);
   border-radius: var(--main-radius);
-  transition: 0.2s;
+  transition: 0.1s;
   &:hover {
     background-color: var(--main-color-darker);
     border-color: var(--main-color-darker);

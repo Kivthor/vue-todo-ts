@@ -117,6 +117,7 @@ const modTask = () => {
 
 .todo-item-text {
   word-break: break-word;
+  white-space: pre-wrap;
   font-size: 1rem;
   letter-spacing: normal;
   word-spacing: normal;
@@ -140,7 +141,7 @@ const modTask = () => {
   background-color: inherit;
   color: var(--main-color-very-light-mod);
   border: var(--border-button);
-  transition: 0.2s;
+  transition: 0.1s;
 }
 
 .modColor {

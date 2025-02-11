@@ -3,6 +3,7 @@ import UiButton from './components/UiButton.vue'
 import TodoItem from './components/TodoItem.vue'
 import { ref } from 'vue'
 
+const taskCount = ref(0)
 const taskList = ref([])
 const addTask = () => {
   taskList.value.push({
@@ -12,11 +13,13 @@ const addTask = () => {
     date: '',
     status: 'WAITING',
   })
+  taskCount.value++
 }
 
 const deleteTask = (taskId: string) => {
   taskList.value = taskList.value.filter((task) => task.id !== taskId)
   console.log(`DELETED TASK WITH ID === ${taskId}`)
+  taskCount.value--
 }
 
 const modTask = (
@@ -38,6 +41,7 @@ const modTask = (
 
 const clearTaskList = () => {
   taskList.value = []
+  taskCount.value = 0
   console.log('CLEAR ALL TASKS')
 }
 
@@ -50,14 +54,17 @@ const changeColor = () => {
 <template>
   <div class="main-container">
     <div class="title-bar-container">
-      <h1>Todo List</h1>
+      <div class="title-container">
+        <div v-if="taskCount" class="counter-container">{{ taskCount }}</div>
+        <h1 class="title">tasks</h1>
+      </div>
       <div class="title-bar-buttons">
         <UiButton @action="addTask" button-type="TOPBUTTON">add</UiButton>
-        <UiButton @action="clearTaskList" button-type="TOPBUTTON">clear</UiButton>
+        <UiButton v-if="taskCount" @action="clearTaskList" button-type="TOPBUTTON">clear</UiButton>
         <UiButton @action="changeColor" button-type="TOPBUTTON">color</UiButton>
       </div>
     </div>
-    <div class="title-bar-container">{{ taskList }}</div>
+    <div v-if="taskCount" class="title-bar-container">{{ taskList }}</div>
     <div class="todo-items-container">
       <TodoItem
         v-for="task in taskList"
@@ -100,7 +107,16 @@ const changeColor = () => {
   background-color: var(--main-color-very-light-mod);
 }
 
-h1 {
+.title-container {
+  min-width: 8rem;
+  display: flex;
+  justify-content: space-evenly;
+  border: var(--border-container);
+}
+
+.title,
+.counter-container {
+  font-size: 1.5rem;
   font-family: monospace;
   font-weight: bold;
   color: var(--main-color-darker);
@@ -108,7 +124,9 @@ h1 {
 }
 
 .title-bar-buttons {
+  min-width: 15rem;
   display: flex;
+  justify-content: space-between;
   gap: 1rem;
   border: var(--border-sub-container);
 }

@@ -1,32 +1,11 @@
 <script setup lang="ts">
 import UiButton from './components/UiButton.vue'
 import TodoItem from './components/TodoItem.vue'
-
-import { v4 as uuidv4 } from 'uuid'
-import { reactive, ref } from 'vue'
-
-// interface Task {
-//   id: number | string
-//   name: string
-//   text: string
-//   date: string
-//   status: string
-// }
-// const task: Task = reactive({
-//   id: 'id' + Math.floor(Math.random() * 10000),
-//   name: '',
-//   text: '',
-//   date: '',
-//   status: 'WAITING',
-// })
-//
-// const addTask = () => taskList.value.push(task)
+import { ref } from 'vue'
 
 const taskList = ref([])
-
 const addTask = () => {
   taskList.value.push({
-    // id: uuidv4(),
     id: 'id' + Math.floor(Math.random() * 1000),
     name: '',
     text: '',
@@ -59,6 +38,7 @@ const modTask = (
 
 const clearTaskList = () => {
   taskList.value = []
+  console.log('CLEAR ALL TASKS')
 }
 
 const changeColor = () => {

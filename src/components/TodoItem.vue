@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import UiButton from './UiButton.vue'
 import UiInput from './UiInput.vue'
+import UiTextArea from './UiTextArea.vue'
+import UiDateInput from './UiDateInput.vue'
 import { ref } from 'vue'
 
 const emit = defineEmits(['delete-task', 'mod-task'])
@@ -40,7 +42,7 @@ const modTask = () => {
       <UiButton @action="deleteTask" button-type="DELETE">x</UiButton>
     </div>
     <div class="todo-item-body">
-      <UiInput
+      <UiTextArea
         name="text-input"
         placeholder="description..."
         :rows="10"
@@ -48,11 +50,11 @@ const modTask = () => {
         :model-value="taskText"
         @update:model-value="taskText = $event"
         v-if="!isSaved"
-      ></UiInput>
+      />
       <p class="todo-item-text" v-else>{{ taskText }}</p>
     </div>
     <div class="todo-item-footer">
-      <UiInput
+      <UiDateInput
         type="date"
         name="date-input"
         :model-value="taskDate"
@@ -140,12 +142,6 @@ const modTask = () => {
   color: var(--main-color-very-light-mod);
   border: var(--border-button);
   transition: 0.2s;
-}
-
-.todo-item-info {
-  padding: 0.5rem;
-  color: var(--main-color-text);
-  background-color: var(--main-color-mod);
 }
 
 .modColor {

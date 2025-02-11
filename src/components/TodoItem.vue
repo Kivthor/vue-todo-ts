@@ -116,8 +116,7 @@ const modTask = () => {
 }
 
 .todo-item-text {
-  word-break: break-all;
-  white-space: pre-wrap;
+  word-break: break-word;
   font-size: 1rem;
   letter-spacing: normal;
   word-spacing: normal;

@@ -60,8 +60,8 @@ const changeColor = () => {
       </div>
       <div class="title-bar-buttons">
         <UiButton @action="addTask" button-type="TOPBUTTON">add</UiButton>
-        <UiButton v-if="taskCount" @action="clearTaskList" button-type="TOPBUTTON">clear</UiButton>
         <UiButton @action="changeColor" button-type="TOPBUTTON">color</UiButton>
+        <UiButton v-if="taskCount" @action="clearTaskList" button-type="TOPBUTTON">clear</UiButton>
       </div>
     </div>
     <div v-if="taskCount" class="title-bar-container">{{ taskList }}</div>
@@ -126,7 +126,6 @@ const changeColor = () => {
 .title-bar-buttons {
   min-width: 15rem;
   display: flex;
-  justify-content: space-between;
   gap: 1rem;
   border: var(--border-sub-container);
 }

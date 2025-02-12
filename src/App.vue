@@ -3,8 +3,16 @@ import UiButton from './components/UiButton.vue'
 import TodoItem from './components/TodoItem.vue'
 import { ref } from 'vue'
 
+interface Task {
+  id: string
+  name: string
+  text: string
+  date: string
+  status: 'WAITING' | 'SAVED' | 'NOT-SAVED'
+}
+
 const taskCount = ref(0)
-const taskList = ref([])
+const taskList = ref<Task[]>([])
 const addTask = () => {
   taskList.value.push({
     id: 'id' + Math.floor(Math.random() * 1000),
@@ -47,7 +55,8 @@ const clearTaskList = () => {
 
 const changeColor = () => {
   const root = document.documentElement
-  root.style.setProperty('--hue', Math.floor(Math.random() * 360))
+  const hue = Math.floor(Math.random() * 360)
+  root.style.setProperty('--hue', hue.toString())
 }
 </script>
 

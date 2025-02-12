@@ -65,7 +65,7 @@ const modTask = () => {
       <UiButton v-if="isSaved" @action="modTask" button-type="EDIT">edit</UiButton>
       <UiButton v-if="!isSaved && taskText" @action="modTask" button-type="SAVE">save</UiButton>
     </div>
-    <span style="color: white; font-weight: bold">{{ taskId }}</span>
+    <span>{{ taskId }}</span>
     <span>{{ todoItem }}</span>
   </div>
 </template>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { useGlobalCounter } from '@/stores/globalCounter.ts'
 import { computed } from 'vue'
 
+const globalCounter = useGlobalCounter()
 const emit = defineEmits(['action'])
 const props = defineProps({
   buttonType: String,
@@ -10,6 +12,7 @@ const isItDeleteButton = computed(() => props.buttonType === 'DELETE')
 const isItTopButton = computed(() => props.buttonType === 'TOPBUTTON')
 const onClick = () => {
   emit('action')
+  globalCounter.increment()
 }
 </script>
 

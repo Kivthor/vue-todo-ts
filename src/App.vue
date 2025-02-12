@@ -1,10 +1,20 @@
 <script setup lang="ts">
 import UiButton from './components/UiButton.vue'
 import TodoItem from './components/TodoItem.vue'
+import { useGlobalCounter } from '@/stores/globalCounter.ts'
 import { ref } from 'vue'
 
+const globalCounter = useGlobalCounter()
+
+interface Task {
+  id: string
+  name: string
+  text: string
+  date: string
+  status: 'WAITING' | 'SAVED' | 'NOT-SAVED'
+}
 const taskCount = ref(0)
-const taskList = ref([])
+const taskList = ref<Task[]>([])
 const addTask = () => {
   taskList.value.push({
     id: 'id' + Math.floor(Math.random() * 1000),
@@ -47,7 +57,8 @@ const clearTaskList = () => {
 
 const changeColor = () => {
   const root = document.documentElement
-  root.style.setProperty('--hue', Math.floor(Math.random() * 360))
+  const hueNumber = Math.floor(Math.random() * 360)
+  root.style.setProperty('--hue', hueNumber.toString())
 }
 </script>
 
@@ -62,6 +73,7 @@ const changeColor = () => {
         <UiButton @action="addTask" button-type="TOPBUTTON">add</UiButton>
         <UiButton @action="changeColor" button-type="TOPBUTTON">color</UiButton>
         <UiButton v-if="taskCount" @action="clearTaskList" button-type="TOPBUTTON">clear</UiButton>
+        <div>{{ globalCounter.count }}</div>
       </div>
     </div>
     <div v-if="taskCount" class="title-bar-container">{{ taskList }}</div>

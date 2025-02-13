@@ -1,16 +1,16 @@
 :root {
 
-  --border-main-container: none;
-  --border-container: none;
-  --border-sub-container: none;
-  --border-button: none;
-  --main-radius: 1.5rem;
+  /*--border-main-container: none;*/
+  /*--border-container: none;*/
+  /*--border-sub-container: none;*/
+  /*--border-button: none;*/
+  /*--main-radius: 1.5rem;*/
 
-  /*--border-main-container: 1px solid black;*/
-  /*--border-container: 1px solid red;*/
-  /*--border-sub-container: 1px solid blue;*/
-  /*--border-button: 1px solid green;*/
-  /*--main-radius: 0rem;*/
+  --border-main-container: 1px solid black;
+  --border-container: 1px solid red;
+  --border-sub-container: 1px solid blue;
+  --border-button: 1px solid green;
+  --main-radius: 0rem;
 
   --hue: 210;
   --hue-mod: calc(var(--hue) + 45);

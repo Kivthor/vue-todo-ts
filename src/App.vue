@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import UiButton from './components/UiButton.vue'
 import TodoItem from './components/TodoItem.vue'
-import { useGlobalCounter } from '@/stores/globalCounter.ts'
+import { useGlobalCounter } from './stores/globalCounter.ts'
+import { useTaskCounter } from './stores/taskCounter.ts'
 import { ref } from 'vue'
 
 const globalCounter = useGlobalCounter()
+const taskCounter = useTaskCounter()
 
 interface Task {
   id: string
@@ -13,8 +15,10 @@ interface Task {
   date: string
   status: 'WAITING' | 'SAVED' | 'NOT-SAVED'
 }
-const taskCount = ref(0)
+
+const hueNumber = ref(210)
 const taskList = ref<Task[]>([])
+
 const addTask = () => {
   taskList.value.push({
     id: 'id' + Math.floor(Math.random() * 1000),
@@ -23,13 +27,12 @@ const addTask = () => {
     date: '',
     status: 'WAITING',
   })
-  taskCount.value++
+  taskCounter.addTask()
 }
 
 const deleteTask = (taskId: string) => {
   taskList.value = taskList.value.filter((task) => task.id !== taskId)
   console.log(`DELETED TASK WITH ID === ${taskId}`)
-  taskCount.value--
 }
 
 const modTask = (
@@ -51,32 +54,36 @@ const modTask = (
 
 const clearTaskList = () => {
   taskList.value = []
-  taskCount.value = 0
+  taskCounter.clearTask()
   console.log('CLEAR ALL TASKS')
 }
 
 const changeColor = () => {
   const root = document.documentElement
-  const hueNumber = Math.floor(Math.random() * 360)
-  root.style.setProperty('--hue', hueNumber.toString())
+  hueNumber.value = Math.floor(Math.random() * 360)
+  root.style.setProperty('--hue', hueNumber.value.toString())
 }
 </script>
 
 <template>
   <div class="main-container">
     <div class="title-bar-container">
+      <div>clicks: {{ globalCounter.count }}</div>
       <div class="title-container">
-        <div v-if="taskCount" class="counter-container">{{ taskCount }}</div>
+        <div v-if="taskCounter.taskCount" class="counter-container">
+          {{ taskCounter.taskCount }}
+        </div>
         <h1 class="title">tasks</h1>
       </div>
       <div class="title-bar-buttons">
-        <UiButton @action="addTask" button-type="TOPBUTTON">add</UiButton>
-        <UiButton @action="changeColor" button-type="TOPBUTTON">color</UiButton>
-        <UiButton v-if="taskCount" @action="clearTaskList" button-type="TOPBUTTON">clear</UiButton>
-        <div>{{ globalCounter.count }}</div>
+        <UiButton @action="addTask" button-type="TOPBUTTON">+</UiButton>
+        <UiButton @action="changeColor" button-type="TOPBUTTON">HUE {{ hueNumber }}</UiButton>
+        <UiButton v-if="taskCounter.taskCount" @action="clearTaskList" button-type="TOPBUTTON"
+          >clear</UiButton
+        >
       </div>
     </div>
-    <div v-if="taskCount" class="title-bar-container">{{ taskList }}</div>
+    <div v-if="taskCounter.taskCount" class="title-bar-container">{{ taskList }}</div>
     <div class="todo-items-container">
       <TodoItem
         v-for="task in taskList"
@@ -136,7 +143,7 @@ const changeColor = () => {
 }
 
 .title-bar-buttons {
-  min-width: 15rem;
+  min-width: 16.6rem;
   display: flex;
   gap: 1rem;
   border: var(--border-sub-container);

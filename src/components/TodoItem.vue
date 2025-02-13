@@ -3,8 +3,10 @@ import UiButton from './UiButton.vue'
 import UiInput from './UiInput.vue'
 import UiTextArea from './UiTextArea.vue'
 import UiDateInput from './UiDateInput.vue'
+import { useTaskCounter } from '@/stores/taskCounter.ts'
 import { ref } from 'vue'
 
+const taskCounter = useTaskCounter()
 const emit = defineEmits(['delete-task', 'mod-task'])
 const props = defineProps({
   todoItem: Object,
@@ -18,6 +20,7 @@ const isSaved = ref(false)
 
 const deleteTask = () => {
   emit('delete-task', taskId.value)
+  taskCounter.deleteTask()
 }
 
 const modTask = () => {

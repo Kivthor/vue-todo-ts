@@ -3,14 +3,16 @@ import UiButton from './UiButton.vue'
 import UiInput from './UiInput.vue'
 import UiTextArea from './UiTextArea.vue'
 import UiDateInput from './UiDateInput.vue'
-import { useTaskCounter } from '@/stores/taskCounter.ts'
+import { useTaskCounterStore } from '@/stores/taskCounterStore.ts'
+import { useTaskListStore } from '@/stores/taskListStore.ts'
 import { ref } from 'vue'
 
-const taskCounter = useTaskCounter()
-const emit = defineEmits(['delete-task', 'mod-task'])
 const props = defineProps({
   todoItem: Object,
 })
+
+const taskListStore = useTaskListStore()
+const taskCounterStore = useTaskCounterStore()
 
 const taskId = ref(props.todoItem.id)
 const taskName = ref('')
@@ -19,13 +21,13 @@ const taskDate = ref('')
 const isSaved = ref(false)
 
 const deleteTask = () => {
-  emit('delete-task', taskId.value)
-  taskCounter.deleteTask()
+  taskListStore.deleteTask(taskId.value)
+  taskCounterStore.deleteTask()
 }
 
 const modTask = () => {
   isSaved.value = !isSaved.value
-  emit('mod-task', taskId.value, taskName.value, taskText.value, taskDate.value, isSaved.value)
+  taskListStore.modTask(taskId.value, taskName.value, taskText.value, taskDate.value, isSaved.value)
 }
 </script>
 

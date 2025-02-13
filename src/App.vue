@@ -1,61 +1,24 @@
 <script setup lang="ts">
 import UiButton from './components/UiButton.vue'
 import TodoItem from './components/TodoItem.vue'
-import { useGlobalCounter } from './stores/globalCounter.ts'
-import { useTaskCounter } from './stores/taskCounter.ts'
+import { useGlobalCounterStore } from './stores/globalCounterStore.ts'
+import { useTaskCounterStore } from './stores/taskCounterStore.ts'
+import { useTaskListStore } from '@/stores/taskListStore.ts'
 import { ref } from 'vue'
 
-const globalCounter = useGlobalCounter()
-const taskCounter = useTaskCounter()
-
-interface Task {
-  id: string
-  name: string
-  text: string
-  date: string
-  status: 'WAITING' | 'SAVED' | 'NOT-SAVED'
-}
-
+const taskListStore = useTaskListStore()
+const globalCounterStore = useGlobalCounterStore()
+const taskCounterStore = useTaskCounterStore()
 const hueNumber = ref(210)
-const taskList = ref<Task[]>([])
 
 const addTask = () => {
-  taskList.value.push({
-    id: 'id' + Math.floor(Math.random() * 1000),
-    name: '',
-    text: '',
-    date: '',
-    status: 'WAITING',
-  })
-  taskCounter.addTask()
-}
-
-const deleteTask = (taskId: string) => {
-  taskList.value = taskList.value.filter((task) => task.id !== taskId)
-  console.log(`DELETED TASK WITH ID === ${taskId}`)
-}
-
-const modTask = (
-  taskId: string,
-  taskName: string,
-  taskText: string,
-  taskDate: string,
-  isSaved: boolean,
-) => {
-  for (const task of taskList.value) {
-    if (task.id === taskId) {
-      task.name = taskName
-      task.text = taskText
-      task.date = taskDate
-      task.status = isSaved ? 'SAVED' : 'NOT-SAVED'
-    }
-  }
+  taskListStore.addTask()
+  taskCounterStore.addTask()
 }
 
 const clearTaskList = () => {
-  taskList.value = []
-  taskCounter.clearTask()
-  console.log('CLEAR ALL TASKS')
+  taskListStore.clearTaskList()
+  taskCounterStore.clearTasks()
 }
 
 const changeColor = () => {
@@ -68,30 +31,26 @@ const changeColor = () => {
 <template>
   <div class="main-container">
     <div class="title-bar-container">
-      <div>clicks: {{ globalCounter.count }}</div>
+      <div>total button clicks: {{ globalCounterStore.count }}</div>
       <div class="title-container">
-        <div v-if="taskCounter.taskCount" class="counter-container">
-          {{ taskCounter.taskCount }}
+        <div v-if="taskCounterStore.taskCount" class="counter-container">
+          {{ taskCounterStore.taskCount }}
         </div>
         <h1 class="title">tasks</h1>
       </div>
       <div class="title-bar-buttons">
         <UiButton @action="addTask" button-type="TOPBUTTON">+</UiButton>
         <UiButton @action="changeColor" button-type="TOPBUTTON">HUE {{ hueNumber }}</UiButton>
-        <UiButton v-if="taskCounter.taskCount" @action="clearTaskList" button-type="TOPBUTTON"
+        <UiButton v-if="taskCounterStore.taskCount" @action="clearTaskList" button-type="TOPBUTTON"
           >clear</UiButton
         >
       </div>
     </div>
-    <div v-if="taskCounter.taskCount" class="title-bar-container">{{ taskList }}</div>
+    <div v-if="taskCounterStore.taskCount" class="title-bar-container">
+      {{ taskListStore.taskList }}
+    </div>
     <div class="todo-items-container">
-      <TodoItem
-        v-for="task in taskList"
-        :key="task.id"
-        :todo-item="task"
-        @delete-task="deleteTask"
-        @mod-task="modTask"
-      />
+      <TodoItem v-for="task in taskListStore.taskList" :key="task.id" :todo-item="task" />
     </div>
   </div>
 </template>

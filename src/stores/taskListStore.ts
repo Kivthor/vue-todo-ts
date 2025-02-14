@@ -9,8 +9,12 @@ interface Task {
   status: 'WAITING' | 'SAVED' | 'NOT-SAVED'
 }
 
+const localTaskList: string | null = localStorage.getItem('taskList')
+
 export const useTaskListStore = defineStore('taskListStore', () => {
   const taskList = ref<Task[]>([])
+  taskList.value = localTaskList !== null ? JSON.parse(localTaskList) : []
+
   const addTask = () => {
     taskList.value.push({
       id: 'id' + Math.floor(Math.random() * 1000),
@@ -19,9 +23,11 @@ export const useTaskListStore = defineStore('taskListStore', () => {
       date: '',
       status: 'WAITING',
     })
+    localStorage.setItem('taskList', JSON.stringify(taskList.value))
   }
   const deleteTask = (taskId: string) => {
     taskList.value = taskList.value.filter((task) => task.id !== taskId)
+    localStorage.setItem('taskList', JSON.stringify(taskList.value))
     console.log(`DELETED TASK WITH ID === ${taskId}`)
   }
   const modTask = (
@@ -39,9 +45,11 @@ export const useTaskListStore = defineStore('taskListStore', () => {
         task.status = isSaved ? 'SAVED' : 'NOT-SAVED'
       }
     }
+    localStorage.setItem('taskList', JSON.stringify(taskList.value))
   }
   const clearTaskList = () => {
     taskList.value = []
+    localStorage.removeItem('taskList')
     console.log('CLEAR ALL TASKS')
   }
   return {

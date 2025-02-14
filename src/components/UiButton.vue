@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { useGlobalCounterStore } from '@/stores/globalCounterStore.ts'
 import { computed } from 'vue'
 
-const globalCounterStore = useGlobalCounterStore()
 const emit = defineEmits(['action'])
 const props = defineProps({
   buttonType: String,
@@ -11,7 +9,6 @@ const isItDeleteButton = computed(() => props.buttonType === 'DELETE')
 const isItTopButton = computed(() => props.buttonType === 'TOPBUTTON')
 const onClick = () => {
   emit('action')
-  globalCounterStore.increment()
 }
 </script>
 

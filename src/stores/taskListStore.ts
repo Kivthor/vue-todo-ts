@@ -6,7 +6,7 @@ interface Task {
   name: string
   text: string
   date: string
-  status: 'WAITING' | 'SAVED' | 'NOT-SAVED'
+  status: 'SAVED' | 'NOT-SAVED'
 }
 
 const localTaskList: string | null = localStorage.getItem('taskList')
@@ -21,7 +21,7 @@ export const useTaskListStore = defineStore('taskListStore', () => {
       name: '',
       text: '',
       date: '',
-      status: 'WAITING',
+      status: 'NOT-SAVED',
     })
     localStorage.setItem('taskList', JSON.stringify(taskList.value))
   }

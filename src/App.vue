@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import UiButton from './components/UiButton.vue'
 import TodoItem from './components/TodoItem.vue'
-import { useGlobalCounterStore } from './stores/globalCounterStore.ts'
 import { useTaskCounterStore } from './stores/taskCounterStore.ts'
 import { useTaskListStore } from '@/stores/taskListStore.ts'
 import { ref } from 'vue'
 
 const taskListStore = useTaskListStore()
-const globalCounterStore = useGlobalCounterStore()
 const taskCounterStore = useTaskCounterStore()
 const hueNumber = ref(210)
 
@@ -31,7 +29,6 @@ const changeColor = () => {
 <template>
   <div class="main-container">
     <div class="title-bar-container">
-      <div>total button clicks: {{ globalCounterStore.count }}</div>
       <div class="title-container">
         <div v-if="taskCounterStore.taskCount" class="counter-container">
           {{ taskCounterStore.taskCount }}

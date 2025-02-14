@@ -15,10 +15,11 @@ const taskListStore = useTaskListStore()
 const taskCounterStore = useTaskCounterStore()
 
 const taskId = ref(props.todoItem.id)
-const taskName = ref('')
-const taskText = ref('')
-const taskDate = ref('')
-const isSaved = ref(false)
+const taskName = ref(props.todoItem.name)
+const taskText = ref(props.todoItem.text)
+const taskDate = ref(props.todoItem.date)
+const taskStatus = ref(props.todoItem.status)
+const isSaved = taskStatus.value === 'NOT-SAVED' ? ref(false) : ref(true)
 
 const deleteTask = () => {
   taskListStore.deleteTask(taskId.value)
